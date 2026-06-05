@@ -80,7 +80,7 @@ export default function MainLayout() {
       </div>
 
       {/* Panel 1b — Content Viewer */}
-      <div className="w-[420px] shrink-0 border-r border-zinc-800 flex flex-col overflow-hidden">
+      <div className="flex-1 min-w-0 border-r border-zinc-800 flex flex-col overflow-hidden">
         <ContentViewer file={selectedFile} content={content} loading={loadingContent} />
       </div>
 
