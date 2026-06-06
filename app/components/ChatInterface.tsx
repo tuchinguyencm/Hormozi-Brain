@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { STAGE_OPTIONS } from '@/lib/router'
 import ApiKeyModal from './ApiKeyModal'
+import MarkdownContent from './MarkdownContent'
 
 const STORAGE_KEY = 'openrouter_api_key'
 
@@ -227,20 +228,23 @@ export default function ChatInterface() {
                     ))}
                   </div>
                 )}
-                <div className={`rounded-2xl px-3 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                  msg.role === 'user'
-                    ? 'bg-orange-500 text-white rounded-tr-sm'
-                    : 'bg-zinc-900 text-zinc-100 rounded-tl-sm border border-zinc-800'
-                }`}>
-                  {msg.content}
-                  {msg.role === 'assistant' && loading && i === messages.length - 1 && msg.content === '' && (
-                    <span className="inline-flex gap-1">
-                      <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                    </span>
-                  )}
-                </div>
+                {msg.role === 'user' ? (
+                  <div className="bg-orange-500 text-white rounded-2xl rounded-tr-sm px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap">
+                    {msg.content}
+                  </div>
+                ) : (
+                  <div className="bg-zinc-900 rounded-2xl rounded-tl-sm px-4 py-3 border border-zinc-800">
+                    {msg.content === '' && loading && i === messages.length - 1 ? (
+                      <span className="inline-flex gap-1 py-1">
+                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </span>
+                    ) : (
+                      <MarkdownContent content={msg.content} />
+                    )}
+                  </div>
+                )}
               </div>
               {msg.role === 'user' && (
                 <div className="w-6 h-6 rounded-full bg-zinc-700 flex items-center justify-center text-xs shrink-0 mt-1">U</div>
