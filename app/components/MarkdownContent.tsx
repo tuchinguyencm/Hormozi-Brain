@@ -2,6 +2,7 @@
 
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 import type { Components } from 'react-markdown'
 
 type Props = {
@@ -98,7 +99,11 @@ export default function MarkdownContent({ content, dim = false }: Props) {
   }
 
   return (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw]}
+      components={components}
+    >
       {content}
     </ReactMarkdown>
   )
