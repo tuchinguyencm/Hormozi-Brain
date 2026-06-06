@@ -10,8 +10,19 @@ type Props = {
   dim?: boolean // dùng cho content viewer (chữ nhỏ hơn)
 }
 
+// Tách các block HTML tag ra dòng riêng để markdown parser nhận diện đúng
+function normalizeHtml(text: string): string {
+  const BLOCK_TAGS = ['table', 'thead', 'tbody', 'tr', 'th', 'td', 'div', 'ul', 'ol', 'li', 'p', 'br', 'hr', 'h1', 'h2', 'h3', 'h4', 'blockquote']
+  const pattern = new RegExp(`(</?(?:${BLOCK_TAGS.join('|')})[^>]*>)`, 'gi')
+  return text
+    .replace(pattern, '\n$1\n')       // thêm newline trước/sau mỗi block tag
+    .replace(/\n{3,}/g, '\n\n')       // gộp nhiều dòng trống lại
+    .trim()
+}
+
 export default function MarkdownContent({ content, dim = false }: Props) {
   const base = dim ? 'text-zinc-300' : 'text-zinc-100'
+  const processed = normalizeHtml(content)
 
   const components: Components = {
     h1: ({ children }) => (
@@ -99,12 +110,14 @@ export default function MarkdownContent({ content, dim = false }: Props) {
   }
 
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw]}
-      components={components}
-    >
-      {content}
-    </ReactMarkdown>
+    <div className="markdown-body">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+        components={components}
+      >
+        {processed}
+      </ReactMarkdown>
+    </div>
   )
 }

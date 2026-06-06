@@ -24,3 +24,42 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Style cho HTML thô trong playbook content (table, td, th, b, br...) */
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  margin: 0.75rem 0;
+  border: 1px solid #27272a;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.markdown-body tr {
+  border-bottom: 1px solid #27272a;
+}
+
+.markdown-body tr:last-child {
+  border-bottom: none;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  color: #a1a1aa;
+  vertical-align: top;
+}
+
+.markdown-body th,
+.markdown-body td b,
+.markdown-body td strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.markdown-body tr:first-child td,
+.markdown-body tr:first-child th {
+  background-color: #18181b;
+}
